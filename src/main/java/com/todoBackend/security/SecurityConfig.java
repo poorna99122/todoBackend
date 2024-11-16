@@ -2,6 +2,7 @@ package com.todoBackend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +19,8 @@ public class SecurityConfig{
     // Bean for configuring HTTP security
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()  // Disable CSRF for API requests (not required for simple APIs)
+    	 http.cors(Customizer.withDefaults() )
+         .csrf().disable()  // Disable CSRF for API requests (not required for simple APIs)
             .authorizeRequests()
             .requestMatchers("/api/todos/**").authenticated()  // Protect your API endpoints
             .and()
